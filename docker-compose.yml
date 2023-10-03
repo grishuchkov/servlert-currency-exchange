@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  db_servlet_currency_exhanger:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=rest-exchange
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - "5440:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+volumes:
+  dbdata:
