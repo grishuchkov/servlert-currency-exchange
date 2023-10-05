@@ -1,8 +1,6 @@
 package ru.grishuchkov.application.exception.iternal;
 
-import ru.grishuchkov.application.exception.AppException;
-
-public class DatabaseConnectionException extends AppException {
+public class DatabaseConnectionException extends DatabaseException {
     public DatabaseConnectionException(String message) {
         super(message);
     }

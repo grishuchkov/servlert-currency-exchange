@@ -1,5 +1,7 @@
 package ru.grishuchkov.application;
 
+import ru.grishuchkov.application.exception.iternal.DatabaseException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -39,12 +41,12 @@ public class DatabaseConnectionManager {
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Error loading db driver");
         }
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Error connection to DB");
         }
     }
 
