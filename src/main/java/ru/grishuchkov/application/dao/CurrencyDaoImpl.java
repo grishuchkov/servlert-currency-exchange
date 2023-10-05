@@ -2,9 +2,9 @@ package ru.grishuchkov.application.dao;
 
 import ru.grishuchkov.application.DatabaseConnectionManager;
 import ru.grishuchkov.application.dao.ifcs.CurrencyDao;
+import ru.grishuchkov.application.dto.CurrencyDto;
 import ru.grishuchkov.application.exception.iternal.DatabaseException;
 import ru.grishuchkov.application.utils.CurrencyMapper;
-import ru.grishuchkov.application.dto.CurrencyDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
