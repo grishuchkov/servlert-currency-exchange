@@ -11,7 +11,7 @@ public class AppExceptionHandler {
 
     public static void handle(HttpServletResponse resp, Exception ex) throws IOException {
 
-        if(ex instanceof AppException){
+        if (ex instanceof AppException) {
             AppException appException = (AppException) ex;
 
             String exceptionMessage = appException.getExceptionError().getMessage();

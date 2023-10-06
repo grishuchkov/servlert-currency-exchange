@@ -11,11 +11,11 @@ import java.util.Properties;
 
 public class DatabaseConnectionManager {
 
+    private final Properties properties;
     private String user;
     private String password;
     private String url;
     private String driver;
-    private final Properties properties;
 
     public DatabaseConnectionManager() {
         this.properties = new Properties();
