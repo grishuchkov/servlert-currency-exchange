@@ -22,7 +22,7 @@ public class DatabaseConnectionManager {
         init();
     }
 
-    private void init(){
+    private void init() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
             InputStream input = classLoader.getResourceAsStream("database.properties");
@@ -37,16 +37,16 @@ public class DatabaseConnectionManager {
         this.driver = properties.getProperty("db_driver");
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
-            throw new DatabaseException("Error loading db driver");
+            throw new DatabaseException();
         }
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            throw new DatabaseException("Error connection to DB");
+            throw new DatabaseException();
         }
     }
 

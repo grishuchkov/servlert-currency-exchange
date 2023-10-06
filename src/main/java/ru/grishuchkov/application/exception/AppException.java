@@ -1,11 +1,13 @@
 package ru.grishuchkov.application.exception;
 
-public class AppException extends RuntimeException{
-    public AppException(String message) {
-        super(message);
-    }
+import lombok.Getter;
 
-    public AppException(String message, Throwable cause) {
-        super(message, cause);
+@Getter
+public class AppException extends RuntimeException{
+
+    private final ExceptionError exceptionError;
+
+    public AppException(ExceptionError exceptionError) {
+        this.exceptionError = exceptionError;
     }
 }
