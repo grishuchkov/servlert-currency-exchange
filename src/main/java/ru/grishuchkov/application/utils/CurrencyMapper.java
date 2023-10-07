@@ -1,6 +1,8 @@
 package ru.grishuchkov.application.utils;
 
 import ru.grishuchkov.application.dto.CurrencyDto;
+import ru.grishuchkov.application.exception.AppException;
+import ru.grishuchkov.application.exception.ExceptionError;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,9 +19,10 @@ public class CurrencyMapper {
             dto.setCode(resultSet.getString("code"));
             dto.setFullName(resultSet.getString("full_name"));
             dto.setSign(resultSet.getString("sign"));
+            return dto;
         }
 
-        return dto;
+        throw new AppException(ExceptionError.CURRENCY_NOT_FOUND);
     }
 
     public static List<CurrencyDto> toDtoList(ResultSet resultSet) throws SQLException {
