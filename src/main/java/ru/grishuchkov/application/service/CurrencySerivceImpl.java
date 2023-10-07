@@ -11,12 +11,16 @@ public class CurrencySerivceImpl implements CurrencyService {
 
     private final CurrencyDao currencyDao = new CurrencyDaoImpl();
 
-
     @Override
     public List<CurrencyDto> getAllCurrencies() {
 
         List<CurrencyDto> allCurrencies = currencyDao.findAllCurrencies();
-
         return allCurrencies;
+    }
+
+    @Override
+    public CurrencyDto getByCode(String code) {
+        CurrencyDto currency = currencyDao.findByCode(code);
+        return currency;
     }
 }
