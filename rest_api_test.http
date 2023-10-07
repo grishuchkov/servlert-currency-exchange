@@ -1,0 +1,5 @@
+### Get all currencies
+GET http://localhost:8080/currencies
+
+### Get currency by name
+GET http://localhost:8080/currency/EUR
