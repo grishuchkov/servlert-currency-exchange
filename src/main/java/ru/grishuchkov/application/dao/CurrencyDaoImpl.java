@@ -22,19 +22,32 @@ public class CurrencyDaoImpl implements CurrencyDao {
         String SQL = "SELECT * FROM currencies";
 
         Connection connection = connectionManager.getConnection();
-        ResultSet resultSet;
+
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return CurrencyMapper.toDtoList(resultSet);
         } catch (SQLException e) {
             throw new DatabaseException();
         }
+    }
+
+    @Override
+    public CurrencyDto findByCode(String code) {
+        String SQL = "SELECT * FROM currencies WHERE code = ?";
+
+        Connection connection = connectionManager.getConnection();
 
         try {
-            return CurrencyMapper.toDtoList(resultSet);
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, code);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return CurrencyMapper.toDto(resultSet);
         } catch (SQLException e) {
-            throw new AppException(ExceptionError.CURRENCY_NOT_FOUND);
+            throw new DatabaseException();
         }
     }
 }
