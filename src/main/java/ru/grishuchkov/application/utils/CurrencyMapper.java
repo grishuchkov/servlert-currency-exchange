@@ -1,8 +1,6 @@
 package ru.grishuchkov.application.utils;
 
 import ru.grishuchkov.application.dto.CurrencyDto;
-import ru.grishuchkov.application.exception.AppException;
-import ru.grishuchkov.application.exception.ExceptionError;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
