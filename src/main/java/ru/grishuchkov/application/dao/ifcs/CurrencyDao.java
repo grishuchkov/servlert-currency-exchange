@@ -1,13 +1,15 @@
 package ru.grishuchkov.application.dao.ifcs;
 
-import ru.grishuchkov.application.dto.CurrencyDto;
+import ru.grishuchkov.application.dto.Currency;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CurrencyDao {
 
-    List<CurrencyDto> findAllCurrencies();
+    List<Currency> findAllCurrencies();
 
-    Optional<CurrencyDto> findByCode(String code);
+    Optional<Currency> findByCode(String code);
+
+    Currency save(Currency currency);
 }

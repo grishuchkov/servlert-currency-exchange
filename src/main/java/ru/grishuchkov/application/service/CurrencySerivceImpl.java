@@ -2,7 +2,7 @@ package ru.grishuchkov.application.service;
 
 import ru.grishuchkov.application.dao.CurrencyDaoImpl;
 import ru.grishuchkov.application.dao.ifcs.CurrencyDao;
-import ru.grishuchkov.application.dto.CurrencyDto;
+import ru.grishuchkov.application.dto.Currency;
 import ru.grishuchkov.application.exception.AppException;
 import ru.grishuchkov.application.exception.ExceptionError;
 import ru.grishuchkov.application.service.ifcs.CurrencyService;
@@ -15,16 +15,26 @@ public class CurrencySerivceImpl implements CurrencyService {
     private final CurrencyDao currencyDao = new CurrencyDaoImpl();
 
     @Override
-    public List<CurrencyDto> getAllCurrencies() {
+    public List<Currency> getAll() {
 
         return currencyDao.findAllCurrencies();
     }
 
     @Override
-    public CurrencyDto getByCode(String code) {
-        Optional<CurrencyDto> currency = currencyDao.findByCode(code);
+    public Currency getByCode(String code) {
+        Optional<Currency> currency = currencyDao.findByCode(code);
 
         return currency.orElseThrow(
                 () -> new AppException(ExceptionError.CURRENCY_NOT_FOUND));
+    }
+
+    @Override
+    public Currency add(String currencyName, String currencyCode, String currencySign) {
+        Currency currency = new Currency();
+        currency.setFullName(currencyName);
+        currency.setCode(currencyCode);
+        currency.setSign(currencySign);
+
+        return currencyDao.save(currency);
     }
 }

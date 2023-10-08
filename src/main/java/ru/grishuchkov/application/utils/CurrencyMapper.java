@@ -1,6 +1,6 @@
 package ru.grishuchkov.application.utils;
 
-import ru.grishuchkov.application.dto.CurrencyDto;
+import ru.grishuchkov.application.dto.Currency;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +10,11 @@ import java.util.Optional;
 
 public class CurrencyMapper {
 
-    public static Optional<CurrencyDto> toDto(ResultSet resultSet) throws SQLException {
-        CurrencyDto dto = null;
+    public static Optional<Currency> toDto(ResultSet resultSet) throws SQLException {
+        Currency dto = null;
 
         if (resultSet.next()) {
-            dto = new CurrencyDto();
+            dto = new Currency();
             dto.setId(resultSet.getLong("id"));
             dto.setCode(resultSet.getString("code"));
             dto.setFullName(resultSet.getString("full_name"));
@@ -23,11 +23,11 @@ public class CurrencyMapper {
         return Optional.ofNullable(dto);
     }
 
-    public static List<CurrencyDto> toDtoList(ResultSet resultSet) throws SQLException {
-        List<CurrencyDto> dtoList = new ArrayList<>();
+    public static List<Currency> toDtoList(ResultSet resultSet) throws SQLException {
+        List<Currency> dtoList = new ArrayList<>();
 
         while (resultSet.next()) {
-            CurrencyDto dto = new CurrencyDto();
+            Currency dto = new Currency();
             dto.setId(resultSet.getLong("id"));
             dto.setCode(resultSet.getString("code"));
             dto.setFullName(resultSet.getString("full_name"));
