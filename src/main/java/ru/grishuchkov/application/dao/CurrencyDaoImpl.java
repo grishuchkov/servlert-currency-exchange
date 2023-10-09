@@ -1,7 +1,7 @@
 package ru.grishuchkov.application.dao;
 
 import org.postgresql.util.PSQLException;
-import ru.grishuchkov.application.DatabaseConnectionManager;
+import ru.grishuchkov.application.DataSource;
 import ru.grishuchkov.application.dao.ifcs.CurrencyDao;
 import ru.grishuchkov.application.dto.Currency;
 import ru.grishuchkov.application.exception.AppException;
@@ -14,15 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class CurrencyDaoImpl implements CurrencyDao {
-    private final DatabaseConnectionManager connectionManager = new DatabaseConnectionManager();
 
     @Override
     public List<Currency> findAllCurrencies() {
         String SQL = "SELECT * FROM currencies";
 
-        Connection connection = connectionManager.getConnection();
-
-        try {
+        try (Connection connection = DataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -36,9 +33,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
     public Optional<Currency> findByCode(String code) {
         String SQL = "SELECT * FROM currencies WHERE code = ?";
 
-        Connection connection = connectionManager.getConnection();
-
-        try {
+        try (Connection connection = DataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, code);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -53,9 +48,8 @@ public class CurrencyDaoImpl implements CurrencyDao {
     public Currency save(Currency currency) {
         String SQL = "INSERT INTO currencies (code, full_name, sign) VALUES (?,?,?)";
 
-        Connection connection = connectionManager.getConnection();
 
-        try {
+        try (Connection connection = DataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, currency.getCode());
             preparedStatement.setString(2, currency.getFullName());

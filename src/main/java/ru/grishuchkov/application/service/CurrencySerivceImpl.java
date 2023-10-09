@@ -15,7 +15,7 @@ public class CurrencySerivceImpl implements CurrencyService {
     private final CurrencyDao currencyDao = new CurrencyDaoImpl();
 
     @Override
-    public List<Currency> getAll() {
+    public List<Currency> getAllCurrencies() {
 
         return currencyDao.findAllCurrencies();
     }

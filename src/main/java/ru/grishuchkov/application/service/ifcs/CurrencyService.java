@@ -5,7 +5,7 @@ import ru.grishuchkov.application.dto.Currency;
 import java.util.List;
 
 public interface CurrencyService {
-    List<Currency> getAll();
+    List<Currency> getAllCurrencies();
 
     Currency getByCode(String currencyCode);
 
