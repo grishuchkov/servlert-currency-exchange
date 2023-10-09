@@ -2,7 +2,7 @@ INSERT INTO currencies (id, code, full_name, sign)
 VALUES (1, 'USD', 'United States dollar', '$'),
        (2, 'EUR', 'Euro', '€'),
        (3, 'RUB', 'Russian Ruble', '₽'),
-       (4, 'ASD', 'Australian dollars', 'A$'),
+       (4, 'AUD', 'Australian dollars', 'A$'),
        (5, 'CNY', 'Yuan Renminbi', '¥');
 
 
