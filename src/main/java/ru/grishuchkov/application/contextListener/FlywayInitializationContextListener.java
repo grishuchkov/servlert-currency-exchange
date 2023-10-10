@@ -7,7 +7,7 @@ import org.flywaydb.core.Flyway;
 import ru.grishuchkov.application.DataSource;
 
 @WebListener(value = "1")
-public class DatabaseContextListener implements ServletContextListener {
+public class FlywayInitializationContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
