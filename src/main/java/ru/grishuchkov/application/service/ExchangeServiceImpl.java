@@ -8,6 +8,7 @@ import ru.grishuchkov.application.exception.ExceptionError;
 import ru.grishuchkov.application.service.ifcs.ExchangeService;
 import ru.grishuchkov.application.utils.Validator;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ExchangeServiceImpl implements ExchangeService {
@@ -32,5 +33,11 @@ public class ExchangeServiceImpl implements ExchangeService {
         return rate;
     }
 
+    @Override
+    public ExchangeRate addNewExchangeRate(String baseCurrencyCode, String targetCurrencyCode, BigDecimal rate) {
+        ExchangeRate exchangeRate = exchangeDao.save(baseCurrencyCode, targetCurrencyCode, rate)
+                .orElseThrow(() -> new AppException(ExceptionError.EXCHANGE_RATE_NOT_FOUND));
 
+        return exchangeRate;
+    }
 }

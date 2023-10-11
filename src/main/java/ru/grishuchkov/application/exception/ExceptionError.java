@@ -13,7 +13,9 @@ public enum ExceptionError {
     CURRENCY_CODE_IS_NOT_PRESENT("Currency code is not exist in URL", HttpServletResponse.SC_BAD_REQUEST),
     BAD_CURRENCY_CODE("Bad currency code", HttpServletResponse.SC_BAD_REQUEST),
     BAD_CURRENCIES_FIELDS("Bad currencies fields", HttpServletResponse.SC_BAD_REQUEST),
-    CURRENCY_ALREADY_EXISTS("Currency with this code already exists", HttpServletResponse.SC_CONFLICT);
+    BAD_EXCHANGE_RATE_FIELDS("Bad exchange rate fields", HttpServletResponse.SC_BAD_REQUEST),
+    CURRENCY_ALREADY_EXISTS("Currency with this code already exists", HttpServletResponse.SC_CONFLICT),
+    EXCHANGE_RATE_ALREADY_EXISTS("Exchange rate already exists", HttpServletResponse.SC_CONFLICT);
 
 
     private final String message;
