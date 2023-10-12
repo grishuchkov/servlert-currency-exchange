@@ -5,18 +5,18 @@ import jakarta.servlet.http.HttpServletRequest;
 public class InputStringUtils {
 
     public static String parseCurrencyPathInfo(HttpServletRequest request) {
-        String currencyCode = getUpperCaseParsedString(request);
+        String currencyCode = replaceSlashFromPath(request).toUpperCase();
 
         return currencyCode;
     }
 
-    public static String parseExchangePathInfo(HttpServletRequest request) {
-        String parsedString = getUpperCaseParsedString(request);
+    public static String parseCodePairFromPathInfo(HttpServletRequest request) {
+        String parsedString = replaceSlashFromPath(request).toUpperCase();
 
         return parsedString;
     }
 
-    private static String getUpperCaseParsedString(HttpServletRequest request) {
-        return request.getPathInfo().replace("/", "").toUpperCase();
+    private static String replaceSlashFromPath(HttpServletRequest request) {
+        return request.getPathInfo().replace("/", "");
     }
 }
