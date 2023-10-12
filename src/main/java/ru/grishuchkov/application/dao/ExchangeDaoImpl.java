@@ -4,8 +4,8 @@ import ru.grishuchkov.application.DataSource;
 import ru.grishuchkov.application.dao.ifcs.ExchangeDao;
 import ru.grishuchkov.application.dto.ExchangeRate;
 import ru.grishuchkov.application.exception.AppException;
-import ru.grishuchkov.application.exception.DuplicateExchangeRate;
 import ru.grishuchkov.application.exception.ExceptionError;
+import ru.grishuchkov.application.exception.ExecuteException;
 import ru.grishuchkov.application.exception.iternal.DatabaseException;
 import ru.grishuchkov.application.utils.ExchangeRateMapper;
 
@@ -51,9 +51,13 @@ public class ExchangeDaoImpl implements ExchangeDao {
 
     private final String INSERT_RATE_BY_CURRENCY_CODES_SQL =
             "INSERT INTO exchange_rates (base_currency_id, target_currency_id, rate)\n" +
-            "VALUES ((SELECT id FROM currencies WHERE code = ?),\n" +
-            "        (SELECT id FROM currencies WHERE code = ?),\n" +
-            "        ?)";
+                    "VALUES ((SELECT id FROM currencies WHERE code = ?),\n" +
+                    "        (SELECT id FROM currencies WHERE code = ?),\n" +
+                    "        ?)";
+
+    private final String UPDATE_RATE_SQL = "UPDATE exchange_rates SET rate = ? " +
+            "WHERE base_currency_id = (SELECT id FROM currencies WHERE code = ?) " +
+            "AND target_currency_id = (SELECT id FROM currencies WHERE code = ?)";
 
     @Override
     public List<ExchangeRate> findAll() {
@@ -102,7 +106,7 @@ public class ExchangeDaoImpl implements ExchangeDao {
                 insertStatement.executeUpdate();
             } catch (SQLException e) {
                 connection.rollback();
-                throw new DuplicateExchangeRate();
+                throw new ExecuteException();
             }
 
             PreparedStatement selectStatement = connection.prepareStatement(FIND_RATE_BY_CURRENCY_CODES_SQL);
@@ -112,13 +116,34 @@ public class ExchangeDaoImpl implements ExchangeDao {
             ResultSet resultSet = selectStatement.executeQuery();
             connection.commit();
 
-
             return ExchangeRateMapper.toDto(resultSet);
 
-        } catch (DuplicateExchangeRate ex){
+        } catch (ExecuteException ex) {
             throw new AppException(ExceptionError.EXCHANGE_RATE_ALREADY_EXISTS);
+        } catch (SQLException e) {
+            throw new DatabaseException();
         }
-        catch (Exception e) {
+    }
+
+    @Override
+    public Optional<ExchangeRate> update(String baseCode, String targetCode, BigDecimal rate) {
+
+
+        try (Connection connection = DataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_RATE_SQL);
+            preparedStatement.setBigDecimal(1, rate);
+            preparedStatement.setString(2, baseCode);
+            preparedStatement.setString(3, targetCode);
+
+            if (preparedStatement.executeUpdate() == 0) {
+                throw new ExecuteException();
+            }
+
+            return findByCurrencyCodes(baseCode, targetCode);
+
+        } catch (ExecuteException ex) {
+            throw new AppException(ExceptionError.CURRENCY_PAIR_IS_MISSING_IN_DATABASE);
+        } catch (SQLException e) {
             throw new DatabaseException();
         }
     }

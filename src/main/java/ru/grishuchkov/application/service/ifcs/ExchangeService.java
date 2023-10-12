@@ -12,4 +12,6 @@ public interface ExchangeService {
     ExchangeRate getByCurrencyCodes(String codePair);
 
     ExchangeRate addNewExchangeRate(String baseCurrencyCode, String targetCurrencyCode, BigDecimal rate);
+
+    ExchangeRate updateRate(String baseCurrencyCode, String targetCurrencyCode, BigDecimal rate);
 }

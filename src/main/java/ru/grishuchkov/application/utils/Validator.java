@@ -33,6 +33,18 @@ public class Validator {
         }
     }
 
+    public static void validateExchangeRateBody(String requestBody) {
+        if (!requestBody.contains("rate=")) {
+            throw new AppException(ExceptionError.BAD_EXCHANGE_RATE_FIELDS);
+        }
+        String rate = requestBody.replace("rate=", "");
+
+        if (!rate.matches("-?\\d+(\\.\\d+)?")) {
+            throw new AppException(ExceptionError.BAD_EXCHANGE_RATE_FIELDS);
+        }
+    }
+
+
     private static boolean isFieldEmpty(String field) {
         return field == null || field.isEmpty();
     }

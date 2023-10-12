@@ -13,4 +13,6 @@ public interface ExchangeDao {
     Optional<ExchangeRate> findByCurrencyCodes(String baseCode, String targetCode);
 
     Optional<ExchangeRate> save(String baseCode, String targetCode, BigDecimal rate);
+
+    Optional<ExchangeRate> update(String baseCode, String targetCode, BigDecimal rate);
 }

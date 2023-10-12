@@ -40,4 +40,11 @@ public class ExchangeServiceImpl implements ExchangeService {
 
         return exchangeRate;
     }
+
+    @Override
+    public ExchangeRate updateRate(String baseCurrencyCode, String targetCurrencyCode, BigDecimal rate) {
+        ExchangeRate exchangeRate = exchangeDao.update(baseCurrencyCode, targetCurrencyCode, rate).get();
+
+        return exchangeRate;
+    }
 }
