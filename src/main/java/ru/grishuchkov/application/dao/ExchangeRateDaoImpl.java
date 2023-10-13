@@ -1,7 +1,7 @@
 package ru.grishuchkov.application.dao;
 
 import ru.grishuchkov.application.DataSource;
-import ru.grishuchkov.application.dao.ifcs.ExchangeDao;
+import ru.grishuchkov.application.dao.ifcs.ExchangeRateDao;
 import ru.grishuchkov.application.dto.ExchangeRate;
 import ru.grishuchkov.application.exception.AppException;
 import ru.grishuchkov.application.exception.ExceptionError;
@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class ExchangeDaoImpl implements ExchangeDao {
+public class ExchangeRateDaoImpl implements ExchangeRateDao {
 
     private final String FIND_ALL_RATES_SQL = "SELECT\n" +
             "er.id,\n" +
@@ -91,10 +91,9 @@ public class ExchangeDaoImpl implements ExchangeDao {
 
     @Override
     public Optional<ExchangeRate> save(String baseCode, String targetCode, BigDecimal rate) {
-
         try (Connection connection = DataSource.getConnection()) {
 
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
             connection.setAutoCommit(false);
 
             PreparedStatement insertStatement = connection.prepareStatement(INSERT_RATE_BY_CURRENCY_CODES_SQL);
@@ -127,8 +126,6 @@ public class ExchangeDaoImpl implements ExchangeDao {
 
     @Override
     public Optional<ExchangeRate> update(String baseCode, String targetCode, BigDecimal rate) {
-
-
         try (Connection connection = DataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_RATE_SQL);
             preparedStatement.setBigDecimal(1, rate);
