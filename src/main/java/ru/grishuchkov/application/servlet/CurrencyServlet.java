@@ -25,7 +25,7 @@ public class CurrencyServlet extends HttpServlet {
         String code = InputStringUtils.parseCurrencyPathInfo(req);
 
         try {
-            Validator.validateCurrency(code);
+            Validator.currencyValidate(code);
             JsonResponse.send(resp, currencyService.getByCode(code), HttpServletResponse.SC_OK);
         } catch (Exception e) {
             AppExceptionHandler.handle(resp, e);

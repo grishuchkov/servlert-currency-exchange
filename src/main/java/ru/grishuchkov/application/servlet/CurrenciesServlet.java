@@ -35,7 +35,7 @@ public class CurrenciesServlet extends HttpServlet {
         String sign = req.getParameter("sign").toUpperCase();
 
         try {
-            Validator.validateCurrency(name, code, sign);
+            Validator.currencyValidate(name, code, sign);
             JsonResponse.send(resp, currencyService.add(name, code, sign), HttpServletResponse.SC_OK);
         } catch (AppException e) {
             AppExceptionHandler.handle(resp, e);

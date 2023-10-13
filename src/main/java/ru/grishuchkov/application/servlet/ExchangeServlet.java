@@ -27,8 +27,6 @@ public class ExchangeServlet extends HttpServlet {
         String targetCurrencyCode = req.getParameter("to");
         String amount = req.getParameter("amount");
 
-        //todo Validation;
-
         try {
             Validator.exchangeValidate(baseCurrencyCode, targetCurrencyCode, amount);
             JsonResponse.send(resp, exchangeService.exchange(baseCurrencyCode, targetCurrencyCode,

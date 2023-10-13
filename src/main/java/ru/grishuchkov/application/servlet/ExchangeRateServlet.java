@@ -52,7 +52,7 @@ public class ExchangeRateServlet extends HttpServlet {
         String firstBodyParam = bodyParams.split("&")[0];
 
         try {
-            Validator.validateExchangeRateBody(firstBodyParam);
+            Validator.exchangeRateBodyValidate(firstBodyParam);
 
             String rate = firstBodyParam.replace("rate=", "");
             Validator.exchangeRateValidate(baseCode, targetCode, rate);

@@ -24,8 +24,8 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
         String baseCurrencyCode = codePair.substring(0, 3);
         String targetCurrencyCode = codePair.substring(3);
-        Validator.validateCurrency(baseCurrencyCode);
-        Validator.validateCurrency(targetCurrencyCode);
+        Validator.currencyValidate(baseCurrencyCode);
+        Validator.currencyValidate(targetCurrencyCode);
 
         ExchangeRate rate = exchangeRateDao.findByCurrencyCodes(baseCurrencyCode, targetCurrencyCode)
                 .orElseThrow(() -> new AppException(ExceptionError.EXCHANGE_RATE_NOT_FOUND));
