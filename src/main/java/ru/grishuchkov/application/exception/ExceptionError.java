@@ -12,9 +12,13 @@ public enum ExceptionError {
     EXCHANGE_RATE_NOT_FOUND("Exchange rate with this currency codes is not found", HttpServletResponse.SC_NOT_FOUND),
     CURRENCY_PAIR_IS_MISSING_IN_DATABASE("Currency pair is missing in the database", HttpServletResponse.SC_NOT_FOUND),
     CURRENCY_CODE_IS_NOT_PRESENT("Currency code is not exist in URL", HttpServletResponse.SC_BAD_REQUEST),
+
     BAD_CURRENCY_CODE("Bad currency code", HttpServletResponse.SC_BAD_REQUEST),
     BAD_CURRENCIES_FIELDS("Bad currencies fields", HttpServletResponse.SC_BAD_REQUEST),
     BAD_EXCHANGE_RATE_FIELDS("Bad exchange rate fields", HttpServletResponse.SC_BAD_REQUEST),
+    BAD_EXCHANGE_FIELDS("Bad exchange fields", HttpServletResponse.SC_BAD_REQUEST),
+    BAD_EXCHANGE_AMOUNT("Bad exchange amount", HttpServletResponse.SC_BAD_REQUEST),
+
     CURRENCY_ALREADY_EXISTS("Currency with this code already exists", HttpServletResponse.SC_CONFLICT),
     EXCHANGE_RATE_ALREADY_EXISTS("Exchange rate already exists", HttpServletResponse.SC_CONFLICT);
 

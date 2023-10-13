@@ -10,6 +10,7 @@ import ru.grishuchkov.application.exception.handler.AppExceptionHandler;
 import ru.grishuchkov.application.service.ExchangeServiceImpl;
 import ru.grishuchkov.application.service.ifcs.ExchangeService;
 import ru.grishuchkov.application.utils.JsonResponse;
+import ru.grishuchkov.application.utils.Validator;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -29,6 +30,7 @@ public class ExchangeServlet extends HttpServlet {
         //todo Validation;
 
         try {
+            Validator.exchangeValidate(baseCurrencyCode, targetCurrencyCode, amount);
             JsonResponse.send(resp, exchangeService.exchange(baseCurrencyCode, targetCurrencyCode,
                                                 new BigDecimal(amount)), HttpServletResponse.SC_OK);
         }catch (AppException exception){
