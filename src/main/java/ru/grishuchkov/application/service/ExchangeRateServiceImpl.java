@@ -5,13 +5,13 @@ import ru.grishuchkov.application.dao.ifcs.ExchangeDao;
 import ru.grishuchkov.application.dto.ExchangeRate;
 import ru.grishuchkov.application.exception.AppException;
 import ru.grishuchkov.application.exception.ExceptionError;
-import ru.grishuchkov.application.service.ifcs.ExchangeService;
+import ru.grishuchkov.application.service.ifcs.ExchangeRateService;
 import ru.grishuchkov.application.utils.Validator;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ExchangeServiceImpl implements ExchangeService {
+public class ExchangeRateServiceImpl implements ExchangeRateService {
     private final ExchangeDao exchangeDao = new ExchangeDaoImpl();
 
     @Override

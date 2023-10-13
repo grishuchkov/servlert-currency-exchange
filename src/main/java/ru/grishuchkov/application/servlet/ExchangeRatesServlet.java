@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.grishuchkov.application.exception.AppException;
 import ru.grishuchkov.application.exception.handler.AppExceptionHandler;
-import ru.grishuchkov.application.service.ExchangeServiceImpl;
-import ru.grishuchkov.application.service.ifcs.ExchangeService;
+import ru.grishuchkov.application.service.ExchangeRateServiceImpl;
+import ru.grishuchkov.application.service.ifcs.ExchangeRateService;
 import ru.grishuchkov.application.utils.JsonResponse;
 import ru.grishuchkov.application.utils.Validator;
 
@@ -18,12 +18,12 @@ import java.math.BigDecimal;
 @WebServlet("/exchangeRates")
 public class ExchangeRatesServlet extends HttpServlet {
 
-    private final ExchangeService exchangeService = new ExchangeServiceImpl();
+    private final ExchangeRateService exchangeRateService = new ExchangeRateServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            JsonResponse.send(resp, exchangeService.getAllRates(), HttpServletResponse.SC_OK);
+            JsonResponse.send(resp, exchangeRateService.getAllRates(), HttpServletResponse.SC_OK);
         } catch (AppException ex) {
             AppExceptionHandler.handle(resp, ex);
         }
@@ -38,7 +38,7 @@ public class ExchangeRatesServlet extends HttpServlet {
         try {
             Validator.exchangeRateValidate(baseCode, targetCode, rateString);
 
-            JsonResponse.send(resp, exchangeService.addNewExchangeRate(baseCode, targetCode,
+            JsonResponse.send(resp, exchangeRateService.addNewExchangeRate(baseCode, targetCode,
                                                     new BigDecimal(rateString)), HttpServletResponse.SC_OK);
         } catch (AppException ex) {
             AppExceptionHandler.handle(resp, ex);

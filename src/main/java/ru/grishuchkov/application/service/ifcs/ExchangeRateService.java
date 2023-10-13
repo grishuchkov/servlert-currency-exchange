@@ -5,7 +5,7 @@ import ru.grishuchkov.application.dto.ExchangeRate;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface ExchangeService {
+public interface ExchangeRateService {
 
     List<ExchangeRate> getAllRates();
 

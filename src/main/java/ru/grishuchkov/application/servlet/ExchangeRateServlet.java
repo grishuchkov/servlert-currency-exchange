@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.grishuchkov.application.exception.AppException;
 import ru.grishuchkov.application.exception.handler.AppExceptionHandler;
-import ru.grishuchkov.application.service.ExchangeServiceImpl;
-import ru.grishuchkov.application.service.ifcs.ExchangeService;
+import ru.grishuchkov.application.service.ExchangeRateServiceImpl;
+import ru.grishuchkov.application.service.ifcs.ExchangeRateService;
 import ru.grishuchkov.application.utils.InputStringUtils;
 import ru.grishuchkov.application.utils.JsonResponse;
 import ru.grishuchkov.application.utils.Validator;
@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 
 @WebServlet("/exchangeRate/*")
 public class ExchangeRateServlet extends HttpServlet {
-    private final ExchangeService exchangeService = new ExchangeServiceImpl();
+    private final ExchangeRateService exchangeRateService = new ExchangeRateServiceImpl();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,7 +36,7 @@ public class ExchangeRateServlet extends HttpServlet {
 
         try {
             String codePair = InputStringUtils.parseCodePairFromPathInfo(req);
-            JsonResponse.send(resp, exchangeService.getByCurrencyCodes(codePair), HttpServletResponse.SC_OK);
+            JsonResponse.send(resp, exchangeRateService.getByCurrencyCodes(codePair), HttpServletResponse.SC_OK);
         } catch (AppException ex) {
             AppExceptionHandler.handle(resp, ex);
         }
@@ -57,7 +57,7 @@ public class ExchangeRateServlet extends HttpServlet {
             String rate = firstBodyParam.replace("rate=", "");
             Validator.exchangeRateValidate(baseCode, targetCode, rate);
 
-            JsonResponse.send(resp, exchangeService.updateRate(baseCode, targetCode, new BigDecimal(rate)),
+            JsonResponse.send(resp, exchangeRateService.updateRate(baseCode, targetCode, new BigDecimal(rate)),
                     HttpServletResponse.SC_OK);
 
         } catch (AppException ex) {
