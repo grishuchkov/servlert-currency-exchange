@@ -1,7 +1,7 @@
 package ru.grishuchkov.application.service;
 
-import ru.grishuchkov.application.dao.ExchangeDaoImpl;
-import ru.grishuchkov.application.dao.ifcs.ExchangeDao;
+import ru.grishuchkov.application.dao.ExchangeRateDaoImpl;
+import ru.grishuchkov.application.dao.ifcs.ExchangeRateDao;
 import ru.grishuchkov.application.dto.ExchangeRate;
 import ru.grishuchkov.application.exception.AppException;
 import ru.grishuchkov.application.exception.ExceptionError;
@@ -12,11 +12,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class ExchangeRateServiceImpl implements ExchangeRateService {
-    private final ExchangeDao exchangeDao = new ExchangeDaoImpl();
+    private final ExchangeRateDao exchangeRateDao = new ExchangeRateDaoImpl();
 
     @Override
     public List<ExchangeRate> getAllRates() {
-        return exchangeDao.findAll();
+        return exchangeRateDao.findAll();
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         Validator.validateCurrency(baseCurrencyCode);
         Validator.validateCurrency(targetCurrencyCode);
 
-        ExchangeRate rate = exchangeDao.findByCurrencyCodes(baseCurrencyCode, targetCurrencyCode)
+        ExchangeRate rate = exchangeRateDao.findByCurrencyCodes(baseCurrencyCode, targetCurrencyCode)
                 .orElseThrow(() -> new AppException(ExceptionError.EXCHANGE_RATE_NOT_FOUND));
 
         return rate;
@@ -35,7 +35,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     @Override
     public ExchangeRate addNewExchangeRate(String baseCurrencyCode, String targetCurrencyCode, BigDecimal rate) {
-        ExchangeRate exchangeRate = exchangeDao.save(baseCurrencyCode, targetCurrencyCode, rate)
+        ExchangeRate exchangeRate = exchangeRateDao.save(baseCurrencyCode, targetCurrencyCode, rate)
                 .orElseThrow(() -> new AppException(ExceptionError.EXCHANGE_RATE_NOT_FOUND));
 
         return exchangeRate;
@@ -43,7 +43,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     @Override
     public ExchangeRate updateRate(String baseCurrencyCode, String targetCurrencyCode, BigDecimal rate) {
-        ExchangeRate exchangeRate = exchangeDao.update(baseCurrencyCode, targetCurrencyCode, rate).get();
+        ExchangeRate exchangeRate = exchangeRateDao.update(baseCurrencyCode, targetCurrencyCode, rate).get();
 
         return exchangeRate;
     }
