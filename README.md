@@ -130,6 +130,8 @@ rate=5
 * Если A-B и B-A нет, то проверяем валютные пары USD-A и USD-B и вычисляем из данных курсов курс для A-B
 * Остальные возможные сценарии опущены для упрощения.
 
+Дополнительно к проекту прикреплены файлы: [rest_api_test.http](rest_api_test.http) и [CurrencyExchange.postman_collection.json](CurrencyExchange.postman_collection.json).
+
 ---
 <a name="author"></a>
 ### Автор проекта:  [Grishuchkov Danila](https://github.com/grishuchkov)
