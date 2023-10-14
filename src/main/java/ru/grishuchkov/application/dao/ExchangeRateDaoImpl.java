@@ -62,7 +62,6 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
     @Override
     public List<ExchangeRate> findAll() {
         try (Connection connection = DataSource.getConnection()) {
-
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_RATES_SQL);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -75,14 +74,11 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
     @Override
     public Optional<ExchangeRate> findByCurrencyCodes(String baseCode, String targetCode) {
         try (Connection connection = DataSource.getConnection()) {
-
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_RATE_BY_CURRENCY_CODES_SQL);
-
             preparedStatement.setString(1, baseCode);
             preparedStatement.setString(2, targetCode);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
             return ExchangeRateMapper.toDto(resultSet);
         } catch (SQLException e) {
             throw new DatabaseException();
@@ -92,7 +88,6 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
     @Override
     public Optional<ExchangeRate> save(String baseCode, String targetCode, BigDecimal rate) {
         try (Connection connection = DataSource.getConnection()) {
-
             PreparedStatement insertStatement = connection.prepareStatement(INSERT_RATE_BY_CURRENCY_CODES_SQL);
             insertStatement.setString(1, baseCode);
             insertStatement.setString(2, targetCode);
@@ -109,7 +104,6 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
             selectStatement.setString(2, targetCode);
 
             ResultSet resultSet = selectStatement.executeQuery();
-
             return ExchangeRateMapper.toDto(resultSet);
 
         } catch (ExecuteException ex) {
@@ -137,8 +131,8 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
             PreparedStatement selectStatement = connection.prepareStatement(FIND_RATE_BY_CURRENCY_CODES_SQL);
             selectStatement.setString(1, baseCode);
             selectStatement.setString(2, targetCode);
-            ResultSet resultSet = selectStatement.executeQuery();
 
+            ResultSet resultSet = selectStatement.executeQuery();
             connection.commit();
             return ExchangeRateMapper.toDto(resultSet);
 
