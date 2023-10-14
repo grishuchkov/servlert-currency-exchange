@@ -4,7 +4,7 @@ services:
   db_servlet_currency_exhanger:
     image: postgres:13
     environment:
-      - POSTGRES_DB=rest-exchange
+      - POSTGRES_DB=rest-currency-exchange
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
     ports:
