@@ -19,7 +19,7 @@ public class TomcatExceptionHandler extends HttpServlet {
         String errorMessage = (String) request.getAttribute("jakarta.servlet.error.message");
         Integer statusCode = (Integer) request.getAttribute("jakarta.servlet.error.status_code");
 
-        if (exception != null){
+        if (exception != null) {
             errorMessage = exception.getCause().toString();
         }
 

@@ -39,7 +39,7 @@ public class ExchangeRatesServlet extends HttpServlet {
             Validator.exchangeRateValidate(baseCode, targetCode, rateString);
 
             JsonResponse.send(resp, exchangeRateService.addNewExchangeRate(baseCode, targetCode,
-                                                    new BigDecimal(rateString)), HttpServletResponse.SC_OK);
+                    new BigDecimal(rateString)), HttpServletResponse.SC_OK);
         } catch (AppException ex) {
             AppExceptionHandler.handle(resp, ex);
         }

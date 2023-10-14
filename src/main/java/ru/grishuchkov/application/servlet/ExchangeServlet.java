@@ -30,8 +30,8 @@ public class ExchangeServlet extends HttpServlet {
         try {
             Validator.exchangeValidate(baseCurrencyCode, targetCurrencyCode, amount);
             JsonResponse.send(resp, exchangeService.exchange(baseCurrencyCode, targetCurrencyCode,
-                                                new BigDecimal(amount)), HttpServletResponse.SC_OK);
-        }catch (AppException exception){
+                    new BigDecimal(amount)), HttpServletResponse.SC_OK);
+        } catch (AppException exception) {
             AppExceptionHandler.handle(resp, exception);
         }
     }

@@ -26,7 +26,7 @@ public class DataSource {
         hikariDataSource = new HikariDataSource(config);
     }
 
-    public static javax.sql.DataSource getDataSource(){
+    public static javax.sql.DataSource getDataSource() {
         return hikariDataSource;
     }
 

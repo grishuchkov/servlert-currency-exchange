@@ -16,6 +16,14 @@ public class ExchangeServiceImpl implements ExchangeService {
 
     private final ExchangeRateDao exchangeRateDao = new ExchangeRateDaoImpl();
 
+    private static BigDecimal getConvertedAmount(BigDecimal amount, BigDecimal rate) {
+        return rate.multiply(amount);
+    }
+
+    private static BigDecimal getRatioRates(BigDecimal divisor, BigDecimal denominator) {
+        return divisor.divide(denominator, 6, RoundingMode.HALF_EVEN);
+    }
+
     @Override
     public Exchange exchange(String baseCurrencyCode, String targetCurrencyCode, BigDecimal amount) {
 
@@ -55,14 +63,6 @@ public class ExchangeServiceImpl implements ExchangeService {
         }
 
         throw new AppException(ExceptionError.CURRENCY_NOT_FOUND);
-    }
-
-    private static BigDecimal getConvertedAmount(BigDecimal amount, BigDecimal rate) {
-        return rate.multiply(amount);
-    }
-
-    private static BigDecimal getRatioRates(BigDecimal divisor, BigDecimal denominator) {
-        return divisor.divide(denominator, 6, RoundingMode.HALF_EVEN);
     }
 
     private Optional<ExchangeRate> getExchangeRate(String baseCurrencyCode, String targetCurrencyCode) {
