@@ -1,5 +1,37 @@
 ### Get all currencies
 GET http://localhost:8080/currencies
 
-### Get currency by name
-GET http://localhost:8080/currency/EUR
+### Get currency by code
+GET http://localhost:8080/currency/KZT
+
+### Save new currency
+POST http://localhost:8080/currencies
+Content-Type: application/x-www-form-urlencoded
+
+name = Qazaqstan teñgesi &
+code = KZT &
+sign = ₸
+
+### Get all exchange rates
+GET http://localhost:8080/exchangeRates
+
+### Add new exchange rate for currencies
+POST http://localhost:8080/exchangeRates
+Content-Type: application/x-www-form-urlencoded
+
+baseCurrencyCode=RUB&
+targetCurrencyCode=KZT&
+rate=4.89
+
+### Get exchange rate for currencies by codes
+GET http://localhost:8080/exchangeRate/RUBKZT
+
+### Patch exchange rate
+PATCH http://localhost:8080/exchangeRate/RUBKZT
+Content-Type: application/x-www-form-urlencoded
+
+rate = 5
+
+### Exchange currencies
+GET http://localhost:8080/exchange?from=RUB&to=KZT&amount=10
+
