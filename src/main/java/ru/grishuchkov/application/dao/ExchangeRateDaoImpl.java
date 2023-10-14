@@ -5,7 +5,7 @@ import ru.grishuchkov.application.dao.ifcs.ExchangeRateDao;
 import ru.grishuchkov.application.dto.ExchangeRate;
 import ru.grishuchkov.application.exception.AppException;
 import ru.grishuchkov.application.exception.ExceptionError;
-import ru.grishuchkov.application.exception.ExecuteException;
+import ru.grishuchkov.application.exception.iternal.ExecuteException;
 import ru.grishuchkov.application.exception.iternal.DatabaseException;
 import ru.grishuchkov.application.utils.ExchangeRateMapper;
 
