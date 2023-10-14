@@ -93,9 +93,6 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
     public Optional<ExchangeRate> save(String baseCode, String targetCode, BigDecimal rate) {
         try (Connection connection = DataSource.getConnection()) {
 
-            connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
-            connection.setAutoCommit(false);
-
             PreparedStatement insertStatement = connection.prepareStatement(INSERT_RATE_BY_CURRENCY_CODES_SQL);
             insertStatement.setString(1, baseCode);
             insertStatement.setString(2, targetCode);
@@ -104,7 +101,6 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
             try {
                 insertStatement.executeUpdate();
             } catch (SQLException e) {
-                connection.rollback();
                 throw new ExecuteException();
             }
 
@@ -113,7 +109,6 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
             selectStatement.setString(2, targetCode);
 
             ResultSet resultSet = selectStatement.executeQuery();
-            connection.commit();
 
             return ExchangeRateMapper.toDto(resultSet);
 
@@ -127,6 +122,9 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
     @Override
     public Optional<ExchangeRate> update(String baseCode, String targetCode, BigDecimal rate) {
         try (Connection connection = DataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_RATE_SQL);
             preparedStatement.setBigDecimal(1, rate);
             preparedStatement.setString(2, baseCode);
@@ -136,7 +134,13 @@ public class ExchangeRateDaoImpl implements ExchangeRateDao {
                 throw new ExecuteException();
             }
 
-            return findByCurrencyCodes(baseCode, targetCode);
+            PreparedStatement selectStatement = connection.prepareStatement(FIND_RATE_BY_CURRENCY_CODES_SQL);
+            selectStatement.setString(1, baseCode);
+            selectStatement.setString(2, targetCode);
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            connection.commit();
+            return ExchangeRateMapper.toDto(resultSet);
 
         } catch (ExecuteException ex) {
             throw new AppException(ExceptionError.CURRENCY_PAIR_IS_MISSING_IN_DATABASE);
