@@ -37,13 +37,13 @@ public class ExchangeRateMapper {
     private static ExchangeRate buildExchangeRate(ResultSet resultSet) throws SQLException {
         Currency baseCurrency = new Currency();
         baseCurrency.setId(resultSet.getLong("base_currency_id"));
-        baseCurrency.setFullName(resultSet.getString("base_currency_name"));
+        baseCurrency.setName(resultSet.getString("base_currency_name"));
         baseCurrency.setCode(resultSet.getString("base_currency_code"));
         baseCurrency.setSign(resultSet.getString("base_currency_sign"));
 
         Currency targetCurrency = new Currency();
         targetCurrency.setId(resultSet.getLong("target_currency_id"));
-        targetCurrency.setFullName(resultSet.getString("target_currency_name"));
+        targetCurrency.setName(resultSet.getString("target_currency_name"));
         targetCurrency.setCode(resultSet.getString("target_currency_code"));
         targetCurrency.setSign(resultSet.getString("target_currency_sign"));
 

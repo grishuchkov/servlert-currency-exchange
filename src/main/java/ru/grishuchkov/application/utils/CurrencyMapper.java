@@ -17,7 +17,7 @@ public class CurrencyMapper {
             dto = new Currency();
             dto.setId(resultSet.getLong("id"));
             dto.setCode(resultSet.getString("code"));
-            dto.setFullName(resultSet.getString("full_name"));
+            dto.setName(resultSet.getString("full_name"));
             dto.setSign(resultSet.getString("sign"));
         }
         return Optional.ofNullable(dto);
@@ -30,7 +30,7 @@ public class CurrencyMapper {
             Currency dto = new Currency();
             dto.setId(resultSet.getLong("id"));
             dto.setCode(resultSet.getString("code"));
-            dto.setFullName(resultSet.getString("full_name"));
+            dto.setName(resultSet.getString("full_name"));
             dto.setSign(resultSet.getString("sign"));
             dtoList.add(dto);
         }

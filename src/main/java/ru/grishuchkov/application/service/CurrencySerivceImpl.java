@@ -31,7 +31,7 @@ public class CurrencySerivceImpl implements CurrencyService {
     @Override
     public Currency add(String currencyName, String currencyCode, String currencySign) {
         Currency currency = new Currency();
-        currency.setFullName(currencyName);
+        currency.setName(currencyName);
         currency.setCode(currencyCode);
         currency.setSign(currencySign);
 
